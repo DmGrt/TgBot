@@ -3,7 +3,6 @@ package org.example;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Botinok extends TelegramLongPollingBot {
     @Override
@@ -33,7 +32,7 @@ public class Botinok extends TelegramLongPollingBot {
             }
             try {
                 execute(message);
-            } catch (TelegramApiException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
