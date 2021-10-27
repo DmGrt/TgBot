@@ -1,10 +1,19 @@
 package org.example;
 
+import org.fluentd.logger.FluentLogger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Botinok extends TelegramLongPollingBot {
+    private static final String LABEL = "Lab7";
+    private final FluentLogger fluentLogger = FluentLogger.getLogger(LABEL, "localhost", 8080);
+    private final Map<String, Object> data = new HashMap<>();
+
     @Override
     public String getBotUsername() {
         return "rezynyaBot";
@@ -25,14 +34,13 @@ public class Botinok extends TelegramLongPollingBot {
             if (message_text.equals("Слава Україні!")) {
                 message.setText("Героям сала!");
             } else {
-                message.setText("Really nigga????? You said "
-                        + "\"" + message_text
-                        + "\"" + "to meee??? "
-                        + " Da budet reznya za take!");
+                message.setText("Hi Zaya! " + message_text);
+                data.put(LABEL, message);
+                fluentLogger.log(LABEL, data);
             }
             try {
                 execute(message);
-            } catch (Exception e) {
+            } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
         }
